@@ -94,7 +94,6 @@ const Page = () => {
                         }
                     </Dropzone>
                 </div>
-
         </div>
     )
 }
