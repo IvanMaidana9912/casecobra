@@ -6,7 +6,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import NextImage from 'next/image';
 import { Rnd } from 'react-rnd';
-import { RadioGroup } from '@headlessui/react';
+import { RadioGroup, Radio } from '@headlessui/react';
 import { useState } from "react";
 import { COLORS } from "@/validators/option-validator";
 import { Label } from "@/components/ui/label";
@@ -23,7 +23,9 @@ const DesignConfigurator = ({ configId, imageUrl, imageDimensions }: DesignConfi
         color: (typeof COLORS)[number]
     }>({
         color: COLORS[0]
-    })
+    });
+    type ColorLabel = 'Red' | 'Blue' | 'Rose' | 'Black' | 'Sky' | 'Amber' | null;
+    const [activeColor, setActiveColor] = useState<ColorLabel>(null);
 
     return (
         <div className="relative mt-20 grid grid-cols-3 mb-20 pb-20">
@@ -33,7 +35,7 @@ const DesignConfigurator = ({ configId, imageUrl, imageDimensions }: DesignConfi
                         <NextImage fill alt='phone image' src="/phone-template.png" className="pointer-events-none z-50 select-none" />
                     </AspectRatio>
                     <div className="absolute z-40 inset-0 left-[3px] top-px right-[3px] bottom-px rounded-[32px] shadow-[0_0_0_99999px_rgba(229,231,235,0.6)]" />
-                    <div className={cn("absolute inset-0 left-[3px] bottom-px rounded-[32px]", 'bg-zinc-950')} />
+                    <div className={cn("absolute inset-0 left-[3px] bottom-px rounded-[32px]", `bg-${options.color.tw}`)} />
                 </div>
                 <Rnd default={{ x: 150, y: 205, height: imageDimensions.height / 4, width: imageDimensions.width / 4 }} lockAspectRatio resizeHandleComponent={{ bottomRight: <HandleComponent />, topRight: <HandleComponent />, bottomLeft: <HandleComponent />, topLeft: <HandleComponent /> }} className="absolute z-20 border-[3px] border-primary">
                     <div className="relative w-full h-full">
@@ -58,13 +60,15 @@ const DesignConfigurator = ({ configId, imageUrl, imageDimensions }: DesignConfi
                                 <div className="mt-3 flex items-center space-x-3">
                                     {
                                         COLORS.map((color) => (
-                                            <RadioGroup.Option 
+                                            <Radio
                                             key={color.label} 
-                                            value={color} 
-                                            className={({active, checked}) => cn("relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 active:ring-0 focus:right-0 active:outline-none focus:outline-none border-2 border-transparent", {[`border-${color.tw}`]: active || checked}
-
+                                            value={color}
+                                            onFocus={() => setActiveColor(color.label)}
+                                            onBlur={() => setActiveColor(null)} 
+                                            className={({checked}) => cn("relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 active:ring-0 focus:right-0 active:outline-none focus:outline-none border-2 border-transparent", {[`border-${color.tw}`]: activeColor === color.label || checked}
                                             )}>
-                                            </RadioGroup.Option>
+                                                <span className={cn(`bg-${color.tw}`, 'h-8 w-8 rounded-full border border-black border-opacity-10')} />
+                                            </Radio>
                                         ))
                                     }
                                 </div>
