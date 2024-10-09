@@ -36,6 +36,8 @@ const DesignConfigurator = ({ configId, imageUrl, imageDimensions }: DesignConfi
         finish: FINISHES.options[0]
 
     });
+
+    // 5:25min
     type ColorLabel = 'Red' | 'Blue' | 'Rose' | 'Black' | 'Sky' | 'Amber' | null;
     type ColorLabelSubMenu = 'Smooth Finish' | 'Textured Finish' | 'Soft Polycarbonate' | 'Silicone' | null;
 
@@ -159,16 +161,20 @@ const DesignConfigurator = ({ configId, imageUrl, imageDimensions }: DesignConfi
                 <div className="w-full px-8 h-16 bg-white">
                     <div className="h-px w-full"/>
                     <div className="w-full h-full flex justify-end items-center">
-                        <div className="w-full flex gap-6 items-center">
-                            <p className="font-medium whitespace-nowrap">
-                                {
-                                    formatPrice((BASE_PRICE + options.material.price + options.finish.price)/100)
-                                }
-                            </p>
-                            <Button size={'sm'} className="w-full">
-                                Continue 
-                                <ArrowRight className="h-4 w-4 ml-1.5 inline"/>
-                            </Button>
+                        <div className="w-full flex flex-col-2 gap-6 justify-between items-center">
+                            <div className="col-span-1">
+                                <p className="font-medium whitespace-nowrap">
+                                    {
+                                        formatPrice((BASE_PRICE + options.material.price + options.finish.price)/100)
+                                    }
+                                </p>
+                            </div>
+                            <div className="col-span-2">
+                                <Button size={'sm'} className="w-full">
+                                    Continue 
+                                    <ArrowRight className="h-4 w-4 ml-1.5 inline"/>
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </div>
